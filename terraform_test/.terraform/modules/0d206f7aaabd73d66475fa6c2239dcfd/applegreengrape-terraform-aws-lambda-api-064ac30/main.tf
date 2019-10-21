@@ -9,30 +9,6 @@ resource aws_api_gateway_deployment deployment {
   stage_name  = "${var.api_stage_name}"
 }
 
-
-####### aws lambda role #######################
-data aws_iam_policy_document assume_role {
-  statement {
-    actions = ["sts:AssumeRole"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["lambda.amazonaws.com"]
-    }
-  }
-}
-
-resource aws_iam_role role {
-  assume_role_policy = "${data.aws_iam_policy_document.assume_role.json}"
-  name               = "${var.api_name}-lamba-role"
-}
-
-resource aws_iam_role_policy_attachment basic {
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-  role       = "${aws_iam_role.role.name}"
-}
-
-####### aws api gateway #######################
 resource aws_api_gateway_integration get {
   content_handling        = "CONVERT_TO_TEXT"
   http_method             = "${aws_api_gateway_method.get.http_method}"
@@ -80,9 +56,6 @@ resource aws_api_gateway_rest_api api {
   name        = "${var.api_name}"
 }
 
-
-########## aws lambda function #######################
-
 resource aws_cloudwatch_log_group logs {
   name              = "/aws/lambda/${aws_lambda_function.lambda.function_name}"
   retention_in_days = "${var.log_group_retention_in_days}"
@@ -98,7 +71,7 @@ resource aws_lambda_function lambda {
   layers           = "${var.lambda_layers}"
   memory_size      = "${var.lambda_memory_size}"
   publish          = "${var.lambda_publish}"
-  role             = "${aws_iam_role.role.arn}"
+  role             = "${var.lambda_role_arn}"
   runtime          = "${var.lambda_runtime}"
   source_code_hash = "${var.lambda_source_code_hash}"
   tags             = "${var.lambda_tags}"
