@@ -1,6 +1,6 @@
 module "lambda-api" {
   source  = "applegreengrape/lambda-api/aws"
-  version = "0.0.2"
+  version = "0.0.3"
   # insert the 6 required variables here
 
   api_name                = "twilio-backend-api"
