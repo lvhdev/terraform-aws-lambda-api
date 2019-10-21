@@ -7,7 +7,7 @@ module "lambda-api" {
   lambda_function_name    = "twilio-backend-api"
   lambda_handler          = "main"
   lambda_runtime          = "go1.x"
-  lambda_filepath         = "/Users/pliu/Documents/jade/terraform-aws-lambda-api/terraform_test/deployment.zip"
+  lambda_filename         = "/Users/pliu/Documents/jade/terraform-aws-lambda-api/terraform_test/deployment.zip"
   lambda_source_code_hash = "${base64sha256(file("/Users/pliu/Documents/jade/terraform-aws-lambda-api/terraform_test/deployment.zip"))}"
 
 
