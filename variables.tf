@@ -61,10 +61,6 @@ variable lambda_publish {
   default     = false
 }
 
-variable lambda_role_arn {
-  description = "Lambda IAM role ARN."
-}
-
 variable lambda_runtime {
   description = "Lambda runtime."
 }
